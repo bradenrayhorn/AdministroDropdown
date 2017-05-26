@@ -18,7 +18,7 @@
             $this->administro->adminPages['dropdown'] =
                 array('icon' => 'caret-square-o-down', 'name' => 'Dropdown', 'file' => 'plugins/Dropdown/admin/dropdown.php');
             // Add forms
-            array_push($this->administro->forms, 'adddropdown', 'adddropdownfile', 'sortdropdown');
+            array_push($this->administro->forms, 'adddropdown', 'adddropdownfile', 'sortdropdown', 'deletedropdownitem');
         }
 
         public function onLoadingPages() {
@@ -140,5 +140,31 @@
             }
         } else {
             die('Invalid parameters!');
+        }
+    }
+
+    function deletedropdownitemform($administro) {
+        $params = $administro->verifyParameters('deletedropdownitem', array('dropdown', 'item'), true, $_GET);
+        if($params !== false) {
+            if($administro->hasPermission('admin.dropdown')) {
+                $plugin = $administro->plugins['Dropdown'];
+                $plugin->load();
+                $dropdowns = $plugin->dropdowns;
+                $id = $params['dropdown'];
+                // Verify dropdown exists
+                if(!isset($dropdowns[$id])) {
+                    die('Invalid dropdown!');
+                }
+                $files = $dropdowns[$id]['files'];
+                // Attempt to delete the file
+                unset($files[$params['item']]);
+                $dropdowns[$id]['files'] = $files;
+                file_put_contents($plugin->dataFile, Yaml::dump($dropdowns));
+                $administro->redirect('admin/dropdown', 'good/Deleted dropdown item!');
+            } else {
+                $administro->redirect('admin/dropdown', 'bad/Invalid permission!');
+            }
+        } else {
+            $administro->redirect('admin/dropdown', 'bad/Invalid parameters!');
         }
     }

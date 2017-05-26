@@ -1,2 +1,5 @@
-version: 1.0.0
-repository: 'bradenrayhorn/AdministroDropdown'
+version: 1.1.0
+repository: bradenrayhorn/AdministroDropdown
+latest:
+    version: 1.0.0
+    time: '2017-05-26 12:16'

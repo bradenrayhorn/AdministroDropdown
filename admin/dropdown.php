@@ -4,14 +4,17 @@
 ?>
 <script src="//rubaxa.github.io/Sortable/Sortable.js"></script>
 <div class='title'>
-    Dropdown File Viewer
+    File Dropdowns
 </div>
 <div class='spacer'></div>
 <?php
     foreach($plugin->dropdowns as $id => $dd) {
-        echo '<div><b>' . $dd['name'] . '</b></div><div id="' . $id . '_sort">';
+        echo '<div class="dropdown-title"><b>' . $dd['name'] . '</b></div><div class="dropdown-list" id="' . $id . '_sort">';
         foreach($dd['files'] as $name => $file) {
-            echo '<div data-id="' . $name . '">- ' . $name . ' (' . $file . ')</div>';
+            $link = $administro->baseDir . 'form/deletedropdownitem?nonce='. $administro->generateNonce('deletedropdownitem') . '&dropdown=';
+            $link .= $id . '&item=' . $name;
+            echo '<p class="dropdown-item" title="' . $file . '" data-id="' . $name . '">- ' . $name . '<a href="' . $link . '">'
+                . '<i class="fa fa-times"></i></a></p>';
         }
         echo '</div>';
     }
@@ -60,10 +63,31 @@
     <input type='hidden' name='nonce' value='<?php echo $administro->generateNonce('adddropdownfile'); ?>'>
     <input class="button-primary" type="submit" value="Add Item">
 </form>
+<style>
+    .dropdown-title {
+        margin-top: 10px;
+    }
+    .dropdown-item {
+        margin: 0 0 0 5px;
+    }
+    .dropdown-item a {
+        color: black;
+        text-decoration: none;
+    }
+    .dropdown-item i {
+        margin-left: 5px;
+    }
+    .dropdown-item:hover {
+        cursor: pointer;
+    }
+    .dropdown-list {
+        display: inline-block;
+    }
+</style>
 <script>
     <?php
         foreach($plugin->dropdowns as $id => $dd) {
-            echo 'var '.$id.'sort = Sortable.create('.$id.'_sort, {dataIdAttr: "data-id", onUpdate: function(evt){saveList("'.$id.'");}});';
+            echo 'var '.$id.'sort = Sortable.create('.$id.'_sort, {dataIdAttr: "data-id", animation: 150, onUpdate: function(evt){saveList("'.$id.'");}});';
         }
     ?>
 

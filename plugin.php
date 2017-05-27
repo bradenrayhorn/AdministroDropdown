@@ -24,7 +24,7 @@
         public function onLoadingPages() {
             $this->load();
             foreach($this->dropdowns as $id => $dd) {
-                $v = '<form action="'.$this->administro->baseDir.'viewdropdown" method="get"><select name="file">';
+                $v = '<form action="'.$this->administro->baseDir.'viewdropdown" method="get" class="dropdown"><select name="file">';
                 foreach($dd['files'] as $name => $file) {
                     $v .= '<option value="'.$file.'">'.$name.'</option>';
                 }

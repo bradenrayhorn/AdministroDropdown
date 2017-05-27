@@ -157,6 +157,7 @@
                 }
                 $files = $dropdowns[$id]['files'];
                 // Attempt to delete the file
+                @unlink($plugin->files . '/' . $id . '/' . $files[$params['item']]);
                 unset($files[$params['item']]);
                 $dropdowns[$id]['files'] = $files;
                 file_put_contents($plugin->dataFile, Yaml::dump($dropdowns));

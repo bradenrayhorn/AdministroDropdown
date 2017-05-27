@@ -8,10 +8,11 @@
 </div>
 <div class='spacer'></div>
 <?php
+    $deleteNonce = $administro->generateNonce('deletedropdownitem');
     foreach($plugin->dropdowns as $id => $dd) {
         echo '<div class="dropdown-title"><b>' . $dd['name'] . '</b></div><div class="dropdown-list" id="' . $id . '_sort">';
         foreach($dd['files'] as $name => $file) {
-            $link = $administro->baseDir . 'form/deletedropdownitem?nonce='. $administro->generateNonce('deletedropdownitem') . '&dropdown=';
+            $link = $administro->baseDir . 'form/deletedropdownitem?nonce='. $deleteNonce . '&dropdown=';
             $link .= $id . '&item=' . $name;
             echo '<p class="dropdown-item" title="' . $file . '" data-id="' . $name . '">- ' . $name . '<a href="' . $link . '">'
                 . '<i class="fa fa-times"></i></a></p>';

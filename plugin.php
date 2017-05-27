@@ -88,6 +88,9 @@
                     // Set new dropdown data
                     $dropdown = $dropdowns[$id];
                     $files = $dropdown['files'];
+                    if(isset($files[$params['name']])){
+                        $administro->redirect('admin/dropdown', 'bad/File already exists!');
+                    }
                     $files[$params['name']] = $_FILES['file']['name'];
                     $dropdown['files'] = $files;
                     $dropdowns[$id] = $dropdown;

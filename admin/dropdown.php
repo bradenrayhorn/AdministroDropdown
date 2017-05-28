@@ -74,12 +74,16 @@
     .dropdown-item a {
         color: black;
         text-decoration: none;
+        display: none;
     }
     .dropdown-item i {
         margin-left: 5px;
     }
     .dropdown-item:hover {
         cursor: pointer;
+    }
+    .dropdown-item:hover a {
+        display: inline;
     }
     .dropdown-list {
         display: inline-block;
